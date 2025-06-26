@@ -151,6 +151,44 @@ deactivate
 
 ---
 
+## Local Testing with a Mock RESTCONF Server
+
+You can test the watcher app without a real switch by running a mock RESTCONF server using Flask. This simulates the required RESTCONF endpoints.
+
+### 1. Install Flask (for local testing only)
+
+```
+pip install flask
+```
+
+Or add `flask` to your `requirements.txt` (for local testing only).
+
+### 2. Run the Mock Server
+
+```
+python mock_switch.py
+```
+
+This will start a server on `localhost:5000` that simulates the RESTCONF API.
+
+### 3. Point the Watcher to the Mock Server
+
+Set the environment variable before running the watcher:
+
+```
+export SWITCH_IP=localhost:5000
+```
+
+### 4. Run the Watcher
+
+```
+python app/watcher.py
+```
+
+The watcher will interact with the mock server as if it were a real switch. You can modify `mock_switch.py` to simulate different interface states or onboarding scenarios.
+
+---
+
 ## Troubleshooting
 - **SSL Errors:** The app disables SSL verification for demo purposes. For production, use valid certificates.
 - **RESTCONF 401/403:** Check credentials and RESTCONF enablement on the switch.
