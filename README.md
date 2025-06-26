@@ -118,6 +118,39 @@ payload = {"interface": iface}  # <-- Placeholder payload
 
 ---
 
+## Local Development with Python Virtual Environments
+
+It is recommended to use a Python virtual environment (`venv`) for local development to isolate dependencies and avoid conflicts with system packages.
+
+### Create and Activate a Virtual Environment
+
+1. **Create the virtual environment:**
+   ```sh
+   python3 -m venv venv
+   ```
+2. **Activate the environment:**
+   - On macOS/Linux:
+     ```sh
+     source venv/bin/activate
+     ```
+   - On Windows:
+     ```sh
+     venv\Scripts\activate
+     ```
+3. **Install dependencies:**
+   ```sh
+   pip install -r app/requirements.txt
+   ```
+
+When finished, you can deactivate the environment with:
+```sh
+deactivate
+```
+
+**Note:** Using `venv` is only necessary for local development. It is not required inside Docker containers or when running on the switch via IOx, as those environments are already isolated.
+
+---
+
 ## Troubleshooting
 - **SSL Errors:** The app disables SSL verification for demo purposes. For production, use valid certificates.
 - **RESTCONF 401/403:** Check credentials and RESTCONF enablement on the switch.
