@@ -127,4 +127,4 @@ payload = {"interface": iface}  # <-- Placeholder payload
 ---
 
 ## License
-MIT or Cisco-internal (choose as appropriate). 
+MIT
