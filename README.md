@@ -169,14 +169,14 @@ Or add `flask` to your `requirements.txt` (for local testing only).
 python mock_switch.py
 ```
 
-This will start a server on `localhost:5000` that simulates the RESTCONF API.
+This will start a server on `localhost:6000` that simulates the RESTCONF API.
 
 ### 3. Point the Watcher to the Mock Server
 
 Set the environment variable before running the watcher:
 
 ```
-export SWITCH_IP=localhost:5000
+export SWITCH_IP=localhost:6000
 ```
 
 ### 4. Run the Watcher
