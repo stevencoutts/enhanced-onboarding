@@ -33,8 +33,13 @@ HEADERS = {
 def get_up_interfaces():
     """Poll the switch for interfaces with oper-status 'up'."""
     url = f"{BASE_URL}/ietf-interfaces:interfaces-state"
+    # Skip auth for localhost
+    if SWITCH.startswith('localhost') or SWITCH.startswith('127.0.0.1'):
+        auth = None
+    else:
+        auth = (USER, PASS)
     try:
-        resp = requests.get(url, auth=(USER, PASS), headers=HEADERS, verify=False, timeout=5)
+        resp = requests.get(url, auth=auth, headers=HEADERS, verify=False, timeout=5)
         resp.raise_for_status()
         data = resp.json()
         interfaces = data.get('interfaces-state', {}).get('interface', [])
@@ -46,11 +51,15 @@ def get_up_interfaces():
 
 def onboard_interface(iface):
     """Trigger onboarding for a given interface (placeholder endpoint and payload)."""
-    # TODO: Replace with the actual onboarding endpoint and payload for your environment
     url = f"{BASE_URL}/xyz-enhanced-onboard:onboard"  # <-- Placeholder endpoint
     payload = {"interface": iface}  # <-- Placeholder payload
+    # Skip auth for localhost
+    if SWITCH.startswith('localhost') or SWITCH.startswith('127.0.0.1'):
+        auth = None
+    else:
+        auth = (USER, PASS)
     try:
-        resp = requests.post(url, json=payload, auth=(USER, PASS), headers=HEADERS, verify=False, timeout=5)
+        resp = requests.post(url, json=payload, auth=auth, headers=HEADERS, verify=False, timeout=5)
         if resp.status_code in (200, 201, 204):
             logging.info(f"Onboarding triggered for {iface} (status {resp.status_code})")
         else:
