@@ -15,8 +15,14 @@ USER = os.environ.get('SWITCH_USER', 'admin')
 PASS = os.environ.get('SWITCH_PASS', 'C1sco12345')
 POLL_INTERVAL = int(os.environ.get('POLL_INTERVAL', '5'))  # seconds
 
-# RESTCONF base URL
-BASE_URL = f"https://{SWITCH}/restconf/data"
+# Auto-detect protocol for RESTCONF base URL
+if SWITCH.startswith('http://') or SWITCH.startswith('https://'):
+    BASE_URL = f"{SWITCH}/restconf/data"
+else:
+    if SWITCH.startswith('localhost') or SWITCH.startswith('127.0.0.1'):
+        BASE_URL = f"http://{SWITCH}/restconf/data"
+    else:
+        BASE_URL = f"https://{SWITCH}/restconf/data"
 
 # RESTCONF headers
 HEADERS = {
